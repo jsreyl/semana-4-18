@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-const models = require('../models');
+const db = require('../models');
 
 const checkToken = async(token) => {
     //Update token to an active one if the one parsed is not active anymore
