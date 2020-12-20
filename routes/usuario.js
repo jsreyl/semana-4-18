@@ -7,17 +7,17 @@ const router = routerx();
 
 //router.get('/list', articuloController.list);
 //Request to api/auth/ returns a list of the users registered on the database
-router.get('/list', auth.verificarVendedor, userController.list)
+router.get('/list', auth.verifyUsuario, userController.list)
 
 // api/auth/register, this is the function executed when a request is sent to /api/use/register
-router.post('/register', userController.register)
+router.post('/add', auth.verifyUsuario, userController.register)
 
 // api/auth/signin
 router.post('/login', userController.login)
 
-router.put('/update', auth.verificarAdministrador, userController.update)
-router.put('/activate', auth.verificarAdministrador, userController.activate)
-router.put('/deactivate', auth.verificarAdministrador, userController.deactivate)
+router.put('/update', auth.verifyUsuario, userController.update)
+router.put('/activate', auth.verifyUsuario, userController.activate)
+router.put('/deactivate', auth.verifyUsuario, userController.deactivate)
 
 
 

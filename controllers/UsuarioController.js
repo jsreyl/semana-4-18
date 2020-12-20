@@ -82,7 +82,8 @@ exports.update = async (req, res, next)=>{
     try {
         const user = await db.Usuario.findOne({where: {email: req.body.email}});
         if (user){
-            const user = await db.Usuario.update({nombre: req.body.nombre},{
+            req.body.password = bcrypt.hashSync(req.body.password, 10);// Password string and how many times to execute the encrypting algorithm
+            const user = await db.Usuario.update({nombre: req.body.nombre, rol: req.body.rol, password: req.body.password, estado: req.body.estado},{
                 where: {
                     email: req.body.email
                 },
@@ -103,11 +104,11 @@ exports.update = async (req, res, next)=>{
 
 exports.activate = async (req, res, next)=>{
     try {
-        const registro = await db.Usuario.findOne({where: {email: req.body.email}});
+        const registro = await db.Usuario.findOne({where: {id: req.body.id}});
         if (registro){
             const registro = await db.Usuario.update({estado: 1},{
                 where: {
-                    email: req.body.email
+                    id: req.body.id
                 },
             });
             res.status(200).json(registro);
@@ -123,11 +124,11 @@ exports.activate = async (req, res, next)=>{
 
 exports.deactivate = async (req, res, next)=>{
     try {
-        const registro = await db.Usuario.findOne({where: {email: req.body.email}});
+        const registro = await db.Usuario.findOne({where: {id: req.body.id}});
         if (registro){
             const registro = await db.Categoria.update({estado: 0},{
                 where: {
-                    email: req.body.email
+                    id: req.body.id
                 },
             });
             res.status(200).json(registro);
